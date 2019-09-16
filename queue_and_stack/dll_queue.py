@@ -17,7 +17,10 @@ class Queue:
       return
     else:
       self.size -= 1
-      self.storage.remove_from_head()
+      return self.storage.remove_from_head()
 
   def len(self):
     return self.size
+
+a = Queue()
+print(a.len())
