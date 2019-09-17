@@ -1,4 +1,5 @@
 from doubly_linked_list import DoublyLinkedList
+from doubly_linked_list import ListNode
 
 class LRUCache:
   """
@@ -14,7 +15,6 @@ class LRUCache:
     self.dll = DoublyLinkedList()
     self.storage = {}
 
-
   """
   Retrieves the value associated with the given key. Also
   needs to move the key-value pair to the end of the order
@@ -23,7 +23,20 @@ class LRUCache:
   key-value pair doesn't exist in the cache. 
   """
   def get(self, key):
-    pass
+    if self.storage.get(key):
+
+      current = self.dll.head
+      while current:
+        if current.value == key:
+          self.dll.move_to_front(current)
+          break
+
+        current = current.next
+      
+      return self.storage.get(key)
+    
+    else:
+      return None
 
   """
   Adds the given key-value pair to the cache. The newly-
@@ -36,4 +49,19 @@ class LRUCache:
   the newly-specified value. 
   """
   def set(self, key, value):
-    pass
+    if self.storage.get(key):
+      self.storage[key] = value
+
+    elif self.size == self.limit:
+      removedNode = self.dll.remove_from_tail()
+      # node = ListNode(key, value)
+      self.dll.add_to_head(key)
+
+      self.storage.pop(removedNode)
+      self.storage[key] = value
+    
+    else:
+      # node = ListNode(key)
+      self.dll.add_to_head(key)
+      self.storage[key] = value
+      self.size += 1
