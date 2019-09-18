@@ -51,21 +51,22 @@ class BinarySearchTree:
   # We know it's not found if we get to a node that doesn't have children
   def contains(self, target):
     
-    current_value = self.value
+    current = self
     done = False
     
     while done == False:
-      if current_value == target:
+
+      if current.value == target:
         return True
 
-      elif self.left is None and self.right is None:
+      elif current.left is None and current.right is None:
         return False
       
-      elif target < current_value:
-        current_value = self.left
+      elif target < current.value:
+        current = current.left
       
       else:
-        current_value = self.right
+        current = current.right
     
 
   # * `get_max` returns the maximum value in the binary search tree.
