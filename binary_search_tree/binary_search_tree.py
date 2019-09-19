@@ -1,7 +1,5 @@
-# from dll_stack import Stack
-# from dll_queue import Queue
-import sys
-sys.path.append('../queue_and_stack')
+from dll_queue import Queue
+from dll_stack import Stack
 
 # Questions:
 # Only ints?
@@ -89,10 +87,79 @@ class BinarySearchTree:
     def for_each(self, cb):
 
         current = self
-        current.value = cb(current.value)
+        cb(current.value)
 
         if current.right:
             current.right.for_each(cb)
 
         if current.left:
             current.left.for_each(cb)
+
+# DAY 2 Project -----------------------
+
+    # Print all the values in order from low to high
+    # Hint:  Use a recursive, depth first traversal
+    def in_order_dft(self, node):
+
+        if node.left:
+            node.left.in_order_dft(node.left)
+
+        print(self.value)
+
+        if node.right:
+            node.right.in_order_dft(node.right)
+
+    # Print the value of every node, starting with the given node,
+    # in an iterative breadth first traversal
+
+    def bft_print(self, node):
+        # Breadth first search - queue
+        # check each level one at a time
+        # create a queue
+        node_queue = Queue()
+        # put root in queue
+        node_queue.enqueue(node)
+        # while queue is not empty
+        while node_queue.len() > 0:
+            # pop first item in queue
+            current_node = node_queue.dequeue()
+            print(current_node.value)
+        # check left and right add to queue
+            if current_node.left:
+                node_queue.enqueue(current_node.left)
+
+            if current_node.right:
+                node_queue.enqueue(current_node.right)
+        # shift
+        # go to head of queue and continue
+
+   # Print the value of every node, starting with the given node,
+   # in an iterative depth first traversal
+    def dft_print(self, node):
+        # create a stack
+        node_stack = Stack()
+        # put root in stack
+        node_stack.push(node)
+        # while stack is not empty
+        while node_stack.len() > 0:
+            # pop first item in stack
+            current_node = node_stack.pop()
+            print(current_node.value)
+        # check root.left and put it in stack
+            if current_node.left:
+                node_stack.push(current_node.left)
+        # check root.right and put it in stack
+            if current_node.right:
+                node_stack.push(current_node.right)
+        # go to top of stack and continue
+
+    # STRETCH Goals -------------------------
+    # Note: Research may be required
+
+    # Print In-order recursive DFT
+    def pre_order_dft(self, node):
+        pass
+
+    # Print Post-order recursive DFT
+    def post_order_dft(self, node):
+        pass
